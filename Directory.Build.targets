@@ -1,0 +1,10 @@
+<Project>
+  <Import Project="Sdk.targets" Sdk="Microsoft.DotNet.Arcade.Sdk" />
+  <PropertyGroup>
+    <NoWarn>$(NoWarn);NU5125;NU5105;NU5104</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Remove="XliffTasks" />
+  </ItemGroup>
+</Project>
