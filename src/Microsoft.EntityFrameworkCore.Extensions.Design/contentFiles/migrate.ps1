@@ -1,6 +1,6 @@
 
 
-$OutputDir = Join-Path -Path $PWD -ChildPath "Data" -Verbose
+$OutputDir = Join-Path -Path $PSScriptRoot -ChildPath "Data" -Verbose
 
 Remove-Item -Path $OutputDir -Force -Recurse -Verbose
 

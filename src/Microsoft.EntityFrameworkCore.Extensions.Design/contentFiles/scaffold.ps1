@@ -1,8 +1,8 @@
 
 Clear-Host
 
-$Models = Join-Path -Path $PWD -ChildPath "Models" -Verbose
-$Context = Join-Path -Path $PWD -ChildPath "Context" -Verbose
+$Models = Join-Path -Path $PSScriptRoot -ChildPath "Models" -Verbose
+$Context = Join-Path -Path $PSScriptRoot -ChildPath "Context" -Verbose
 
 if (Test-Path $Models)
 {

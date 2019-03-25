@@ -88,16 +88,25 @@ namespace Microsoft.EntityFrameworkCore.Scaffolding.Internal
                 (foreignKey.PrincipalToDependent != null ? "p => p." + foreignKey.PrincipalToDependent.Name : null) +
                 ")";
 
-            WriteLine($"// Relationship {foreignKey.DeclaringEntityType.Name} --> {foreignKey.PrincipalEntityType.Name}");
-            WriteLine(hasOne);
+            WriteLine();
+            WriteLine();
+            Write($"// Relationship {foreignKey.DeclaringEntityType.Name} --> {foreignKey.PrincipalEntityType.Name}");
+
+            WriteLine();
+            Write(hasOne);
+
             PushIndent();
-            WriteLine(hasOneOrMany);
+
+            WriteLine();
+            Write(hasOneOrMany);
+
             PopIndent();
 
             if (!foreignKey.PrincipalKey.IsPrimaryKey())
             {
                 PushIndent();
-                WriteLine(".HasPrincipalKey" +
+                WriteLine();
+                Write(".HasPrincipalKey" +
                                (foreignKey.IsUnique ? "<" + TBE.DisplayName(foreignKey.PrincipalEntityType) + ">" : "") +
                                "(p => " +
                                GenerateLambdaToKey(foreignKey.PrincipalKey.Properties, "p") +
@@ -106,7 +115,8 @@ namespace Microsoft.EntityFrameworkCore.Scaffolding.Internal
             }
 
             PushIndent();
-            WriteLine(".HasForeignKey" +
+            WriteLine();
+            Write(".HasForeignKey" +
                            (foreignKey.IsUnique ? "<" + TBE.DisplayName(foreignKey.DeclaringEntityType) + ">" : "") +
                            "(d => " +
                            GenerateLambdaToKey(foreignKey.Properties, "d") +
@@ -176,24 +186,26 @@ namespace Microsoft.EntityFrameworkCore.Scaffolding.Internal
 
         protected override void GenerateProperty(IEntityType entityType, IProperty property)
         {
-            WriteLine();
 
             List<IAnnotation> list = property.GetAnnotations().ToList();
-
-            WriteLine();
 
             if (property.IsPrimaryKey())
             {
                 var key = entityType.FindPrimaryKey();
-                WriteLine($"builder.HasKey(x=>x.{property.Name})");
+                WriteLine();
+                Write($"builder.HasKey(x=>x.{property.Name})");
                 PushIndent();
-                WriteLine($".HasName(\"{key.SqlServer().Name}\");");
+                WriteLine();
+                Write($".HasName(\"{key.SqlServer().Name}\");");
                 PopIndent();
+                WriteLine();
             }
 
-            WriteLine($"// Property {entityType.Name}.{property.Name}");
-
-            WriteLine("builder.Property(x => x." + property.Name + ")");
+            WriteLine();
+            WriteLine();
+            Write($"// Property {entityType.Name}.{property.Name}");
+            WriteLine();
+            Write("builder.Property(x => x." + property.Name + ")");
             RemoveAnnotation(ref list, "Relational:ColumnName");
             RemoveAnnotation(ref list, "Relational:ColumnType");
             RemoveAnnotation(ref list, "MaxLength");
@@ -352,13 +364,18 @@ namespace Microsoft.EntityFrameworkCore.Scaffolding.Internal
 
         protected override void GenerateIndex(IIndex index)
         {
-            List<IAnnotation> list = index.GetAnnotations().ToList<IAnnotation>();
+            List<IAnnotation> list = index.GetAnnotations().ToList();
+
+            WriteLine();
+
             Write("builder.HasIndex(e => " + GenerateLambdaToKey(index.Properties, "e") + ")");
-            if (!string.IsNullOrEmpty((string)index["Relational:Name"]))
+            if (!string.IsNullOrEmpty(index.SqlServer().Name))
             {
+                PushIndent();
                 WriteLine();
-                Write(".HasName(" + Helper.Literal(index.Relational().Name) + ")");
+                Write(".HasName(" + Helper.Literal(index.SqlServer().Name) + ")");
                 RemoveAnnotation(ref list, "Relational:Name");
+                PopIndent();
             }
 
             if (index.IsUnique)
