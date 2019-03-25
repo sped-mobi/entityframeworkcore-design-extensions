@@ -1,8 +1,7 @@
 ﻿using System.Text;
 
-namespace Microsoft.EntityFrameworkCore.Design.Impl
+namespace Microsoft.EntityFrameworkCore.Design.Internal
 {
-
     public class StringBuilderProvider : IStringBuilderProvider
     {
         private StringBuilder _builder;

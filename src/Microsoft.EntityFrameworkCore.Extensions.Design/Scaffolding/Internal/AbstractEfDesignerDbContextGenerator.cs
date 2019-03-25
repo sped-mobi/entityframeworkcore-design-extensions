@@ -12,27 +12,13 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Scaffolding.Internal;
 using TypeBaseExtensions = Microsoft.EntityFrameworkCore.Metadata.Internal.TypeBaseExtensions;
 
-namespace Microsoft.EntityFrameworkCore.Design.Context
+namespace Microsoft.EntityFrameworkCore.Scaffolding.Internal
 {
-    public abstract class AbstractCSharpDbContextGenerator : AbstractIndentedCodeWriter, ICSharpDbContextGenerator
+    public abstract class AbstractEfDesignerDbContextGenerator : AbstractCodeGenerator, ICSharpDbContextGenerator
     {
-        protected AbstractCSharpDbContextGenerator(IDbContextServiceProvider serviceProvider) : base(serviceProvider.Provider)
+        protected AbstractEfDesignerDbContextGenerator(CodeGeneratorDependencies depenencies) : base(depenencies)
         {
-            Pluralizer = serviceProvider.Pluralizer;
-            Helper = serviceProvider.Helper;
-            AnnotationCodeGenerator = serviceProvider.AnnotationCodeGenerator;
-            AnnotationsBuilder = serviceProvider.AnnotationsBuilder;
-
         }
-
-        protected IPluralizer Pluralizer { get; }
-
-        protected ICSharpHelper Helper { get; }
-
-        protected IAnnotationsBuilder AnnotationsBuilder { get; }
-
-        protected IAnnotationCodeGenerator AnnotationCodeGenerator { get; }
-
 
         public virtual string WriteCode(IModel model,
             string @namespace,
@@ -52,10 +38,8 @@ namespace Microsoft.EntityFrameworkCore.Design.Context
                 GenerateClass(model, contextName, connectionString);
             }
 
-            return StringBuilderProvider.Builder.ToString();
+            return Provider.Builder.ToString();
         }
-
-
 
         protected abstract void GenerateOnModelCreating(IModel model);
 
@@ -79,7 +63,6 @@ namespace Microsoft.EntityFrameworkCore.Design.Context
                 GenerateConfigurationClasses(model);
             }
         }
-
 
         protected virtual void GenerateConfigurationClasses(IModel model)
         {

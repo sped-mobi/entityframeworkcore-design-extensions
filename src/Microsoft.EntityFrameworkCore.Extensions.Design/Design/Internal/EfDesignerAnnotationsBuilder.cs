@@ -9,13 +9,13 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 
-namespace Microsoft.EntityFrameworkCore.Design.Impl
+namespace Microsoft.EntityFrameworkCore.Design.Internal
 {
-    public class AnnotationsBuilder : IAnnotationsBuilder
+    public class EfDesignerAnnotationsBuilder : IEfDesignerAnnotationsBuilder
     {
         private readonly ICSharpHelper _helper;
 
-        public AnnotationsBuilder(ICSharpHelper helper)
+        public EfDesignerAnnotationsBuilder(EfDesignerHelper helper)
         {
             _helper = helper;
         }
@@ -44,7 +44,6 @@ namespace Microsoft.EntityFrameworkCore.Design.Impl
 
             if (annotations.Count() == 2)
             {
-
             }
 
             List<string> list = annotations.Select(GenerateAnnotation).ToList<string>();
@@ -55,13 +54,12 @@ namespace Microsoft.EntityFrameworkCore.Design.Impl
 
                 if (i == list.Count - 1)
                 {
-                    writeAction(line);
+                    writeLineAction(line);
                 }
                 else
                 {
-                    writeLineAction(line);
+                    writeAction(line);
                 }
-
             }
             popIndentAction();
         }
@@ -70,5 +68,6 @@ namespace Microsoft.EntityFrameworkCore.Design.Impl
         {
             return ".HasAnnotation(" + _helper.Literal(annotation.Name) + ", " + _helper.UnknownLiteral(annotation.Value) + ")";
         }
+
     }
 }

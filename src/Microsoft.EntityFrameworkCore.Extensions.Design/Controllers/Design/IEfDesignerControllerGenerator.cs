@@ -6,9 +6,9 @@
 
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace Microsoft.EntityFrameworkCore.Design
+namespace Microsoft.EntityFrameworkCore.Controllers.Design
 {
-    public interface ICSharpControllerGenerator
+    public interface IEfDesignerControllerGenerator
     {
         string GenerateClass(IEntityType entityType, string @namespace, bool useSwagger);
     }

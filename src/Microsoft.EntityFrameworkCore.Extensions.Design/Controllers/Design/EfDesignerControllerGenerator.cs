@@ -4,20 +4,20 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-
+using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace Microsoft.EntityFrameworkCore.Design.Controllers
+namespace Microsoft.EntityFrameworkCore.Controllers.Design
 {
-    public sealed class CSharpControllerGenerator : AbstractCSharpControllerGenerator
+    public class EfDesignerControllerGenerator : AbstractEfDesignerControllerGenerator
     {
-        public CSharpControllerGenerator(IDbContextServiceProvider provider) : base(provider)
+        public EfDesignerControllerGenerator(CodeGeneratorDependencies dependencies) : base(dependencies)
         {
         }
 
         public override string GenerateClass(IEntityType entityType, string @namespace, bool useSwagger)
         {
-            StringBuilderProvider.Builder.Clear();
+            Provider.Builder.Clear();
             GenerateFileHeader();
 
             WriteLine($"namespace {@namespace}");
@@ -26,8 +26,7 @@ namespace Microsoft.EntityFrameworkCore.Design.Controllers
 
             }
 
-
-            return null;
+            return Provider.Builder.ToString();
         }
     }
 }

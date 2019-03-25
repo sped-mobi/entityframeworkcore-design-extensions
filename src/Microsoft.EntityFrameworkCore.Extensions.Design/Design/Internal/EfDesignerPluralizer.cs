@@ -11,13 +11,13 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using Microsoft.EntityFrameworkCore.Design;
 
-namespace Microsoft.EntityFrameworkCore.Design.Impl
+namespace Microsoft.EntityFrameworkCore.Design.Internal
 {
     /// <summary>
     /// Default pluralization service implementation to be used by Entity Framework. This pluralization service is based on
     /// English locale.
     /// </summary>
-    public class Pluralizer : IPluralizer
+    public class EfDesignerPluralizer : IPluralizer
     {
         private readonly IReadOnlyDictionary<string, string> _irregularPluralsReverseList;
         private readonly IReadOnlyDictionary<string, string> _assimilatedClassicalInflectionReverseList;
@@ -424,7 +424,7 @@ namespace Microsoft.EntityFrameworkCore.Design.Impl
         /// <summary>
         /// Constructs a new instance of default pluralization service used in Entity Framework.
         /// </summary>
-        public Pluralizer()
+        public EfDesignerPluralizer()
         {
             _irregularPluralsReverseList = Reverse(_irregularPluralsList);
             _assimilatedClassicalInflectionReverseList = Reverse(_assimilatedClassicalInflectionList);

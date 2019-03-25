@@ -5,31 +5,28 @@
 // -----------------------------------------------------------------------
 
 using System.IO;
+using Microsoft.EntityFrameworkCore.Controllers.Design;
+using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.EntityFrameworkCore.Scaffolding;
 using Microsoft.EntityFrameworkCore.Scaffolding.Internal;
 
-namespace Microsoft.EntityFrameworkCore.Design.Model
+namespace Microsoft.EntityFrameworkCore.Scaffolding
 {
-    public sealed class CSharpModelCodeGenerator : AbstractCSharpModelCodeGenerator
+    public class EfDesignerModelCodeGenerator : AbstractEfDesignerModelCodeGenerator
     {
-        public CSharpModelCodeGenerator(
-            ModelCodeGeneratorDependencies dependencies,
-            ICSharpControllerGenerator controllerGenerator,
+        public EfDesignerModelCodeGenerator(
+            CodeGeneratorDependencies dependencies,
             ICSharpEntityTypeGenerator entityTypeGenerator,
             ICSharpDbContextGenerator dbContextGenerator) : base(dependencies)
         {
-            ControllerGenerator = controllerGenerator;
             EntityTypeGenerator = entityTypeGenerator;
             DbContextGenerator = dbContextGenerator;
         }
 
-        public ICSharpControllerGenerator ControllerGenerator { get; }
         public ICSharpEntityTypeGenerator EntityTypeGenerator { get; }
         public ICSharpDbContextGenerator DbContextGenerator { get; }
-
-
 
         /// <summary>Generates code for a model.</summary>
         /// <param name="model"> The model. </param>
@@ -47,26 +44,21 @@ namespace Microsoft.EntityFrameworkCore.Design.Model
             ModelCodeGenerationOptions options)
         {
             var scaffoldedModel = new ScaffoldedModel();
-            string str1 = DbContextGenerator.WriteCode(model, @namespace, contextName, connectionString, options.UseDataAnnotations, options.SuppressConnectionStringWarning);
+            string dbContextCode = DbContextGenerator.WriteCode(model, @namespace, contextName, connectionString, options.UseDataAnnotations, options.SuppressConnectionStringWarning);
             string path2 = contextName + ".cs";
             scaffoldedModel.ContextFile = new ScaffoldedFile()
             {
                 Path = Path.Combine(contextDir, path2),
-                Code = str1
+                Code = dbContextCode
             };
             foreach (IEntityType entityType in model.GetEntityTypes())
             {
-                string str2 = EntityTypeGenerator.WriteCode(entityType, @namespace, options.UseDataAnnotations);
-                string str3 = entityType.DisplayName() + ".cs";
-                scaffoldedModel.AdditionalFiles.Add(new ScaffoldedFile()
-                {
-                    Path = str3,
-                    Code = str2
-                });
+                string contextCode = EntityTypeGenerator.WriteCode(entityType, @namespace, options.UseDataAnnotations);
+                string fileName = entityType.DisplayName() + ".cs";
+                scaffoldedModel.AdditionalFiles.Add(CreateFile(contextCode, fileName));
             }
             return scaffoldedModel;
         }
-
 
         private static ScaffoldedFile CreateFile(string code, string path)
             => new ScaffoldedFile { Code = code, Path = path };

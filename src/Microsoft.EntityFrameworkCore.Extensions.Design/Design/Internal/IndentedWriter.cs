@@ -8,7 +8,7 @@ using System;
 using System.IO;
 using System.Text;
 
-namespace Microsoft.EntityFrameworkCore.Design
+namespace Microsoft.EntityFrameworkCore.Design.Internal
 {
     /// <summary>
     /// Text writer that handles complicated indentations with ease.

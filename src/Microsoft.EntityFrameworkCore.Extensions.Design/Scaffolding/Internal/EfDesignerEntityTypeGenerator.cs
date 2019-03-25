@@ -7,12 +7,13 @@
 using System.Linq;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
-namespace Microsoft.EntityFrameworkCore.Design.Entities
+namespace Microsoft.EntityFrameworkCore.Scaffolding.Internal
 {
-    public class CSharpEntityTypeGenerator : AbstractCSharpEntityTypeGenerator
+    public class EfDesignerEntityTypeGenerator : AbstractEfDesignerEntityTypeGenerator
     {
-        public CSharpEntityTypeGenerator(IDbContextServiceProvider serviceProvider) : base(serviceProvider)
+        public EfDesignerEntityTypeGenerator(CodeGeneratorDependencies depenencies) : base(depenencies)
         {
         }
 
@@ -77,21 +78,29 @@ namespace Microsoft.EntityFrameworkCore.Design.Entities
 
         private void GeneratePropertyDataAnnotations(IProperty property)
         {
-
         }
 
         private void GenerateConstructor(IEntityType entityType)
         {
-            foreach (IProperty property in entityType.GetProperties().OrderBy(p => p.Scaffolding().ColumnOrdinal))
+            WriteLine();
+            WriteLine($"public {entityType.Name}()");
+            using (OpenBlock())
             {
-                if (UseDataAnnotations)
+                IOrderedEnumerable<INavigation> source = entityType.GetNavigations().OrderBy(n => !n.IsDependentToPrincipal() ? 1 : 0).ThenBy(n => !n.IsCollection() ? 0 : 1);
+                if (!source.Any())
+                    return;
+                foreach (INavigation navigation in source)
                 {
-                    GeneratePropertyDataAnnotations(property);
+                    string navigationName = navigation.Name;
+                    string targetTypeName = navigation.GetTargetType().Name;
+                    string typeName = "";
+                    if (navigation.IsCollection())
+                        typeName = "HashSet<" + targetTypeName + ">();";
+                    else
+                        typeName = targetTypeName + "();";
+
+                    WriteLine($"{navigationName} = new {typeName}");
                 }
-
-                WriteLine();
-
-                WriteLine("public " + Helper.Reference(property.ClrType) + " " + property.Name + " { get; set; }");
             }
         }
 

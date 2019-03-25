@@ -8,19 +8,13 @@ using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Scaffolding.Internal;
 
-namespace Microsoft.EntityFrameworkCore.Design.Entities
+namespace Microsoft.EntityFrameworkCore.Scaffolding.Internal
 {
-    public abstract class AbstractCSharpEntityTypeGenerator : AbstractIndentedCodeWriter, ICSharpEntityTypeGenerator
+    public abstract class AbstractEfDesignerEntityTypeGenerator : AbstractCodeGenerator, ICSharpEntityTypeGenerator
     {
-        public AbstractCSharpEntityTypeGenerator(IDbContextServiceProvider serviceProvider) : base(serviceProvider.Provider)
+        protected AbstractEfDesignerEntityTypeGenerator(CodeGeneratorDependencies depenencies) : base(depenencies)
         {
-            Pluralizer = serviceProvider.Pluralizer;
-            Helper = serviceProvider.Helper;
         }
-
-        protected IPluralizer Pluralizer { get; }
-
-        protected ICSharpHelper Helper { get; }
 
         protected bool UseDataAnnotations { get; set; }
 
@@ -31,7 +25,7 @@ namespace Microsoft.EntityFrameworkCore.Design.Entities
         public string WriteCode(IEntityType entityType, string @namespace, bool useDataAnnotations)
         {
             UseDataAnnotations = true;
-            StringBuilderProvider.Builder.Clear();
+            Provider.Builder.Clear();
             GenerateFileHeader();
             WriteLine("using System;");
             WriteLine("using System.Collections.Generic;");
@@ -42,10 +36,9 @@ namespace Microsoft.EntityFrameworkCore.Design.Entities
                 GenerateClass(entityType);
                 WriteLine();
                 GenerateInterface(entityType);
-
             }
 
-            return StringBuilderProvider.Builder.ToString();
+            return Provider.Builder.ToString();
         }
 
         protected abstract void GenerateClass(IEntityType entityType);
