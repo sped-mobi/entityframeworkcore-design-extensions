@@ -23,9 +23,8 @@ namespace Microsoft.EntityFrameworkCore
             serviceCollection.AddSingleton<CodeGeneratorDependencies>();
 
             serviceCollection.AddSingleton<IStringBuilderProvider, StringBuilderProvider>();
-            serviceCollection.AddSingleton<EfDesignerHelper>();
+            serviceCollection.AddSingleton<ICSharpHelper, EfDesignerHelper>();
             serviceCollection.AddSingleton<IPluralizer, EfDesignerPluralizer>();
-            serviceCollection.AddSingleton<IEfDesignerAnnotationsBuilder, EfDesignerAnnotationsBuilder>();
 
             // Entities
             serviceCollection.AddSingleton<ICSharpEntityTypeGenerator, EfDesignerEntityTypeGenerator>();

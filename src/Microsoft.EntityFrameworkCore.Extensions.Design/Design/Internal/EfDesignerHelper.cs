@@ -291,7 +291,7 @@ namespace Microsoft.EntityFrameworkCore.Design.Internal
         public EfDesignerHelper(
           [NotNull] IRelationalTypeMappingSource relationalTypeMappingSource)
         {
-            this._relationalTypeMappingSource = relationalTypeMappingSource;
+            _relationalTypeMappingSource = relationalTypeMappingSource;
         }
 
         /// <summary>
@@ -326,7 +326,7 @@ namespace Microsoft.EntityFrameworkCore.Design.Internal
         /// <returns>The <see cref="string"/></returns>
         public virtual string Reference(Type type)
         {
-            return this.Reference(type, false);
+            return Reference(type, false);
         }
 
         /// <summary>
@@ -341,11 +341,11 @@ namespace Microsoft.EntityFrameworkCore.Design.Internal
             if (_builtInTypes.TryGetValue(type, out string str))
                 return str;
             if (type.IsConstructedGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))
-                return this.Reference(SharedTypeExtensions.UnwrapNullableType(type)) + "?";
+                return Reference(SharedTypeExtensions.UnwrapNullableType(type)) + "?";
             StringBuilder stringBuilder = new StringBuilder();
             if (type.IsArray)
             {
-                stringBuilder.Append(this.Reference(type.GetElementType())).Append("[");
+                stringBuilder.Append(Reference(type.GetElementType())).Append("[");
                 int arrayRank = type.GetArrayRank();
                 for (int index = 1; index < arrayRank; ++index)
                     stringBuilder.Append(",");
@@ -353,7 +353,7 @@ namespace Microsoft.EntityFrameworkCore.Design.Internal
                 return stringBuilder.ToString();
             }
             if (type.IsNested)
-                stringBuilder.Append(this.Reference(type.DeclaringType)).Append(".");
+                stringBuilder.Append(Reference(type.DeclaringType)).Append(".");
             stringBuilder.Append(useFullName ? type.DisplayName(true) : type.ShortDisplayName());
             return stringBuilder.ToString();
         }
@@ -413,7 +413,7 @@ namespace Microsoft.EntityFrameworkCore.Design.Internal
         '.'
          }, StringSplitOptions.RemoveEmptyEntries)))
             {
-                string str = this.Identifier(name1, null);
+                string str = Identifier(name1, null);
                 if (!string.IsNullOrEmpty(str))
                     stringBuilder.Append(str).Append('.');
             }
@@ -498,7 +498,7 @@ namespace Microsoft.EntityFrameworkCore.Design.Internal
         /// <returns>The <see cref="string"/></returns>
         public virtual string Literal(DateTimeOffset value)
         {
-            return "new DateTimeOffset(" + this.Literal(value.DateTime) + ", " + this.Literal(value.Offset) + ")";
+            return "new DateTimeOffset(" + Literal(value.DateTime) + ", " + Literal(value.Offset) + ")";
         }
 
         /// <summary>
@@ -674,7 +674,7 @@ namespace Microsoft.EntityFrameworkCore.Design.Internal
         /// <returns>The <see cref="string"/></returns>
         public virtual string Literal<T>(T? value) where T : struct
         {
-            return this.UnknownLiteral(value);
+            return UnknownLiteral(value);
         }
 
         /// <summary>
@@ -686,7 +686,7 @@ namespace Microsoft.EntityFrameworkCore.Design.Internal
         /// <returns>The <see cref="string"/></returns>
         public virtual string Literal<T>(IReadOnlyList<T> values)
         {
-            return this.Array(values);
+            return Array(values);
         }
 
         /// <summary>
@@ -696,7 +696,7 @@ namespace Microsoft.EntityFrameworkCore.Design.Internal
         /// <returns>The <see cref="string"/></returns>
         private string Array(IEnumerable values)
         {
-            return "new[] { " + string.Join(", ", values.Cast<object>().Select<object, string>(new Func<object, string>(this.UnknownLiteral))) + " }";
+            return "new[] { " + string.Join(", ", values.Cast<object>().Select<object, string>(new Func<object, string>(UnknownLiteral))) + " }";
         }
 
         /// <summary>
@@ -707,7 +707,7 @@ namespace Microsoft.EntityFrameworkCore.Design.Internal
         /// <returns>The <see cref="string"/></returns>
         public virtual string Literal(IReadOnlyList<object> values)
         {
-            return this.Literal(values, false);
+            return Literal(values, false);
         }
 
         /// <summary>
@@ -720,7 +720,7 @@ namespace Microsoft.EntityFrameworkCore.Design.Internal
         public virtual string Literal(IReadOnlyList<object> values, bool vertical)
         {
             if (!vertical)
-                return "new object[] { " + string.Join(", ", values.Select<object, string>(new Func<object, string>(this.UnknownLiteral))) + " }";
+                return "new object[] { " + string.Join(", ", values.Select<object, string>(new Func<object, string>(UnknownLiteral))) + " }";
             IndentedStringBuilder indentedStringBuilder = new IndentedStringBuilder();
             indentedStringBuilder.AppendLine("new object[]").AppendLine("{");
             using (indentedStringBuilder.Indent())
@@ -729,7 +729,7 @@ namespace Microsoft.EntityFrameworkCore.Design.Internal
                 {
                     if (index != 0)
                         indentedStringBuilder.AppendLine(",");
-                    indentedStringBuilder.Append(this.UnknownLiteral(values[index]));
+                    indentedStringBuilder.Append(UnknownLiteral(values[index]));
                 }
             }
             indentedStringBuilder.AppendLine().Append("}");
@@ -759,7 +759,7 @@ namespace Microsoft.EntityFrameworkCore.Design.Internal
                     {
                         if (index2 != 0)
                             indentedStringBuilder.Append(", ");
-                        indentedStringBuilder.Append(this.UnknownLiteral(values[index1, index2]));
+                        indentedStringBuilder.Append(UnknownLiteral(values[index1, index2]));
                     }
                     indentedStringBuilder.Append(" }");
                 }
@@ -779,8 +779,8 @@ namespace Microsoft.EntityFrameworkCore.Design.Internal
             Type type = value.GetType();
             string name = Enum.GetName(type, value);
             if (name != null)
-                return this.GetSimpleEnumValue(type, name);
-            return this.GetCompositeEnumValue(type, value);
+                return GetSimpleEnumValue(type, name);
+            return GetCompositeEnumValue(type, value);
         }
 
         /// <summary>
@@ -792,7 +792,7 @@ namespace Microsoft.EntityFrameworkCore.Design.Internal
         /// <returns>The <see cref="string"/></returns>
         protected virtual string GetSimpleEnumValue(Type type, string name)
         {
-            return this.Reference(type) + "." + name;
+            return Reference(type) + "." + name;
         }
 
         /// <summary>
@@ -815,8 +815,8 @@ namespace Microsoft.EntityFrameworkCore.Design.Internal
             return source.Aggregate<Enum, string>(null, (previous, current) =>
             {
                 if (previous != null)
-                    return previous + " | " + this.GetSimpleEnumValue(type, Enum.GetName(type, current));
-                return this.GetSimpleEnumValue(type, Enum.GetName(type, current));
+                    return previous + " | " + GetSimpleEnumValue(type, Enum.GetName(type, current));
+                return GetSimpleEnumValue(type, Enum.GetName(type, current));
             });
         }
 
@@ -852,15 +852,15 @@ namespace Microsoft.EntityFrameworkCore.Design.Internal
             if (_literalFuncs.TryGetValue(SharedTypeExtensions.UnwrapNullableType(type), out Func<EfDesignerHelper, object, string> func))
                 return func(this, value);
             if (value is Enum @enum)
-                return this.Literal(@enum);
+                return Literal(@enum);
             if (value is Array array)
-                return this.Array(array);
-            RelationalTypeMapping mapping = this._relationalTypeMappingSource.FindMapping(type);
+                return Array(array);
+            RelationalTypeMapping mapping = _relationalTypeMappingSource.FindMapping(type);
             if (mapping == null)
                 throw new InvalidOperationException();
             StringBuilder builder = new StringBuilder();
             Expression codeLiteral = mapping.GenerateCodeLiteral(value);
-            if (!this.HandleExpression(codeLiteral, builder, false))
+            if (!HandleExpression(codeLiteral, builder, false))
                 throw new NotSupportedException();
             return builder.ToString();
         }
@@ -879,11 +879,11 @@ namespace Microsoft.EntityFrameworkCore.Design.Internal
                 case ExpressionType.Call:
                     MethodCallExpression methodCallExpression = (MethodCallExpression)expression;
                     if (methodCallExpression.Method.IsStatic)
-                        builder.Append(this.Reference(methodCallExpression.Method.DeclaringType, true));
-                    else if (!this.HandleExpression(methodCallExpression.Object, builder, false))
+                        builder.Append(Reference(methodCallExpression.Method.DeclaringType, true));
+                    else if (!HandleExpression(methodCallExpression.Object, builder, false))
                         return false;
                     builder.Append('.').Append(methodCallExpression.Method.Name);
-                    return this.HandleArguments(methodCallExpression.Arguments, builder);
+                    return HandleArguments(methodCallExpression.Arguments, builder);
                 case ExpressionType.Constant:
                     object obj1 = ((ConstantExpression)expression).Value;
                     StringBuilder stringBuilder = builder;
@@ -899,19 +899,19 @@ namespace Microsoft.EntityFrameworkCore.Design.Internal
                             goto label_13;
                         }
                     }
-                    obj2 = this.UnknownLiteral(obj1);
+                    obj2 = UnknownLiteral(obj1);
                 label_13:
                     stringBuilder.Append(obj2);
                     return true;
                 case ExpressionType.Convert:
-                    builder.Append('(').Append(this.Reference(expression.Type, true)).Append(')');
-                    return this.HandleExpression(((UnaryExpression)expression).Operand, builder, false);
+                    builder.Append('(').Append(Reference(expression.Type, true)).Append(')');
+                    return HandleExpression(((UnaryExpression)expression).Operand, builder, false);
                 case ExpressionType.New:
-                    builder.Append("new ").Append(this.Reference(expression.Type, true));
-                    return this.HandleArguments(((NewExpression)expression).Arguments, builder);
+                    builder.Append("new ").Append(Reference(expression.Type, true));
+                    return HandleArguments(((NewExpression)expression).Arguments, builder);
                 case ExpressionType.NewArrayInit:
-                    builder.Append("new ").Append(this.Reference(expression.Type.GetElementType())).Append("[] { ");
-                    this.HandleList(((NewArrayExpression)expression).Expressions, builder, true);
+                    builder.Append("new ").Append(Reference(expression.Type.GetElementType())).Append("[] { ");
+                    HandleList(((NewArrayExpression)expression).Expressions, builder, true);
                     builder.Append(" }");
                     return true;
                 default:
@@ -928,7 +928,7 @@ namespace Microsoft.EntityFrameworkCore.Design.Internal
         private bool HandleArguments(IEnumerable<Expression> argumentExpressions, StringBuilder builder)
         {
             builder.Append('(');
-            if (!this.HandleList(argumentExpressions, builder, false))
+            if (!HandleList(argumentExpressions, builder, false))
                 return false;
             builder.Append(')');
             return true;
@@ -950,7 +950,7 @@ namespace Microsoft.EntityFrameworkCore.Design.Internal
             foreach (Expression argumentExpression in argumentExpressions)
             {
                 builder.Append(str);
-                if (!this.HandleExpression(argumentExpression, builder, simple))
+                if (!HandleExpression(argumentExpression, builder, simple))
                     return false;
                 str = ", ";
             }
@@ -973,7 +973,7 @@ namespace Microsoft.EntityFrameworkCore.Design.Internal
                 {
                     if (index != 0)
                         stringBuilder.Append(", ");
-                    stringBuilder.Append(this.UnknownLiteral(callCodeFragment.Arguments[index]));
+                    stringBuilder.Append(UnknownLiteral(callCodeFragment.Arguments[index]));
                 }
                 stringBuilder.Append(")");
             }
@@ -987,7 +987,7 @@ namespace Microsoft.EntityFrameworkCore.Design.Internal
         /// <returns>The <see cref="string"/></returns>
         private string Fragment(NestedClosureCodeFragment fragment)
         {
-            return fragment.Parameter + " => " + fragment.Parameter + this.Fragment(fragment.MethodCall);
+            return fragment.Parameter + " => " + fragment.Parameter + Fragment(fragment.MethodCall);
         }
 
         /// <summary>

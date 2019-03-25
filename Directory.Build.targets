@@ -1,7 +1,7 @@
 <Project>
   <Import Project="Sdk.targets" Sdk="Microsoft.DotNet.Arcade.Sdk" />
   <PropertyGroup>
-    <NoWarn>$(NoWarn);NU5125;NU5105;NU5104</NoWarn>
+    <NoWarn>$(NoWarn);NU5125;NU5105;NU5104;NU5111;NU5110</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

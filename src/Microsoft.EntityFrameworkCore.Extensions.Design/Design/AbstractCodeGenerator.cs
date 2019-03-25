@@ -14,6 +14,7 @@ namespace Microsoft.EntityFrameworkCore.Design
         {
             Pluralizer = depenencies.Pluralizer;
             Helper = depenencies.Helper;
+            AnnotationCodeGenerator = depenencies.AnnotationCodeGenerator;
 
         }
 
@@ -23,8 +24,5 @@ namespace Microsoft.EntityFrameworkCore.Design
         public ICSharpHelper Helper { get; set; }
 
         public IAnnotationCodeGenerator AnnotationCodeGenerator { get; set; }
-
-        public IEfDesignerAnnotationsBuilder AnnotationsBuilder { get; set; }
-
     }
 }

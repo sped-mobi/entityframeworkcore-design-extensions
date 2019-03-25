@@ -18,7 +18,19 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="microsoft.entityframeworkcore.relational" Version="2.2.2" />
+    <Compile Remove="contentFiles\DesignTimeServices.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="contentFiles\**\*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="contentFiles\**\*" Pack="true" PackagePath="content" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="2.2.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="2.2.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.2.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.2" />

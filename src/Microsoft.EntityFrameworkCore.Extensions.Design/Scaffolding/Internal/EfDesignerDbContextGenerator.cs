@@ -386,9 +386,9 @@ namespace Microsoft.EntityFrameworkCore.Scaffolding.Internal
                 }
                 else
                 {
-                    MethodCallCodeFragment fluentApi = this.AnnotationCodeGenerator.GenerateFluentApi(index, annotation);
+                    MethodCallCodeFragment fluentApi = AnnotationCodeGenerator.GenerateFluentApi(index, annotation);
 #pragma warning disable CS0618 // Type or member is obsolete
-                    string str = fluentApi == null ? this.AnnotationCodeGenerator.GenerateFluentApi(index, annotation, "CSharp") : Helper.Fragment(fluentApi);
+                    string str = fluentApi == null ? AnnotationCodeGenerator.GenerateFluentApi(index, annotation, "CSharp") : Helper.Fragment(fluentApi);
 #pragma warning restore CS0618 // Type or member is obsolete
                     if (str != null)
                     {
@@ -423,13 +423,13 @@ namespace Microsoft.EntityFrameworkCore.Scaffolding.Internal
 
         private void InitializeEntityTypeBuilder(IEntityType entityType)
         {
-            if (!this._entityTypeBuilderInitialized)
+            if (!_entityTypeBuilderInitialized)
             {
                 WriteLine();
                 WriteLine("builder.Entity<" + entityType.Name + ">(entity =>");
                 Write("{");
             }
-            this._entityTypeBuilderInitialized = true;
+            _entityTypeBuilderInitialized = true;
         }
 
         private static string GenerateLambdaToKey(
