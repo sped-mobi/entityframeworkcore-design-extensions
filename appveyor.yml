@@ -9,8 +9,9 @@ before_build:
 - nuget restore
 
 build:
-  verbosity: minimal
-  script: Build.cmd
+  verbosity: detailed
+  script:
+    - cmd Build.cmd
 
 
 deploy:
