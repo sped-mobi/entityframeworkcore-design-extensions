@@ -19,13 +19,18 @@ namespace Microsoft.EntityFrameworkCore.Scaffolding
         public EfDesignerModelCodeGenerator(
             CodeGeneratorDependencies dependencies,
             ICSharpEntityTypeGenerator entityTypeGenerator,
-            ICSharpDbContextGenerator dbContextGenerator) : base(dependencies)
+            ICSharpDbContextGenerator dbContextGenerator,
+            IEfDesignerControllerGenerator controllerGenerator) : base(dependencies)
         {
             EntityTypeGenerator = entityTypeGenerator;
             DbContextGenerator = dbContextGenerator;
+            ControllerGenerator = controllerGenerator;
         }
 
+        public IEfDesignerControllerGenerator ControllerGenerator { get; }
+
         public ICSharpEntityTypeGenerator EntityTypeGenerator { get; }
+
         public ICSharpDbContextGenerator DbContextGenerator { get; }
 
         /// <summary>Generates code for a model.</summary>
@@ -57,6 +62,18 @@ namespace Microsoft.EntityFrameworkCore.Scaffolding
                 string fileName = entityType.DisplayName() + ".cs";
                 scaffoldedModel.AdditionalFiles.Add(CreateFile(contextCode, fileName));
             }
+            foreach (IEntityType entityType in model.GetEntityTypes())
+            {
+                string controllerCode = ControllerGenerator.WriteCode(entityType, @namespace, contextName);
+                string fileName = entityType.DisplayName() + "Controller.cs";
+                string path = Path.Combine("Controllers", fileName);
+
+                if (!Directory.Exists("Controllers"))
+                    Directory.CreateDirectory("Controllers");
+
+                scaffoldedModel.AdditionalFiles.Add(CreateFile(controllerCode, path));
+            }
+
             return scaffoldedModel;
         }
 
@@ -68,5 +85,6 @@ namespace Microsoft.EntityFrameworkCore.Scaffolding
         /// </summary>
         /// <value> The language. </value>
         public override string Language => "C#";
+
     }
 }

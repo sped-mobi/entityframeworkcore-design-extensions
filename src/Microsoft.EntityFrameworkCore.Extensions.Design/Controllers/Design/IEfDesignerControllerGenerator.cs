@@ -10,6 +10,6 @@ namespace Microsoft.EntityFrameworkCore.Controllers.Design
 {
     public interface IEfDesignerControllerGenerator
     {
-        string GenerateClass(IEntityType entityType, string @namespace, bool useSwagger);
+        string WriteCode(IEntityType entityType, string @namespace, string contextName);
     }
 }

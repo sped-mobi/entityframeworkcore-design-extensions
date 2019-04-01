@@ -1,29 +1,43 @@
 <Project>
   <PropertyGroup>
-    <DotNetBuildFromSource>true</DotNetBuildFromSource>
+    <!--<DotNetBuildFromSource>false</DotNetBuildFromSource>-->
     <DotNetFinalVersionKind>release</DotNetFinalVersionKind>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <GitHubOrganization>sped-mobi</GitHubOrganization>
+    <GitHubRepositoryBranch>master</GitHubRepositoryBranch>
+    <GitHubRepositoryName>entityframeworkcore-design-extensions</GitHubRepositoryName>
+    <GitHubBaseRepositoryUrl>https://github.com/$(GitHubOrganization)/$(GitHubRepositoryName)</GitHubBaseRepositoryUrl>
+    <GitHubRepositoryUrl>$(GitHubBaseRepositoryUrl).git</GitHubRepositoryUrl>
+    <GitHubPackageProjectUrl>$(GitHubBaseRepositoryUrl)/tree/$(GitHubRepositoryBranch)</GitHubPackageProjectUrl>
+  </PropertyGroup>
 
   <Import Project="Sdk.props" Sdk="Microsoft.DotNet.Arcade.Sdk" />
   
   <PropertyGroup>
 
-    <Authors>Brad Marshall</Authors>
-    <Copyright>(c) Brad Marshall. All Rights Reserved</Copyright>
-    <Owners>Brad Marshall</Owners>
-    <Company>Sped Mobi</Company>
+    <Authors>Brad Marshall</Authors> 
+    <Owners>$(Authors)</Owners>
+    <Company>$(Authors)</Company>
+    <Product>$(AssemblyName)</Product>
+    <Copyright>%A9 $([System.DateTime]::Now.Year) $(Company). All Rights Reserved.</Copyright>
 
-    <PackageLicenseUrl>http://sped.mobi/license.html</PackageLicenseUrl>
-    <PackageIconUrl>http://sped.mobi/icons/microsoft.ico</PackageIconUrl>
+    <PackageDescription>$(Description)</PackageDescription>
+    <PackageReleaseNotes>$(PackageDescription)</PackageReleaseNotes>
+      
+    <RepositoryUrl>$(GitHubRepositoryUrl)</RepositoryUrl>
+    <PackageIconUrl>https://go.microsoft.com/fwlink/?LinkID=288859</PackageIconUrl>
+    <PackageLicenseUrl>https://apache.org/licenses/#2.0</PackageLicenseUrl>
+    <PackageProjectUrl>$(GitHubPackageProjectUrl)</PackageProjectUrl>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
 
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     
     <!--<DebugType>full</DebugType>-->
     <DebugSymbols>true</DebugSymbols>
-    <LangVersion>Latest</LangVersion>
+    <LangVersion>latest</LangVersion>
 
   </PropertyGroup>
 </Project>

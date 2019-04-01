@@ -7,7 +7,7 @@ before_build:
 - nuget restore
 
 build_script:
-- cmd: build.cmd
+- cmd: Release.cmd
 
 deploy:
   provider: NuGet

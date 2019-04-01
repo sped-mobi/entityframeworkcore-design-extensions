@@ -33,7 +33,7 @@ namespace Microsoft.EntityFrameworkCore
             serviceCollection.AddSingleton<ICSharpDbContextGenerator, EfDesignerDbContextGenerator>();
 
             // Controllers
-            // serviceCollection.AddSingleton<IEfDesignerControllerGenerator, EfDesignerControllerGenerator>();
+            serviceCollection.AddSingleton<IEfDesignerControllerGenerator, EfDesignerControllerGenerator>();
 
             // Model
             serviceCollection.AddSingleton<IModelCodeGenerator, EfDesignerModelCodeGenerator>();

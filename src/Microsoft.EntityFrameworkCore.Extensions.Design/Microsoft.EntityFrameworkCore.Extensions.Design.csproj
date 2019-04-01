@@ -1,18 +1,16 @@
 ﻿<Project>
 
   <PropertyGroup>
-    <Description>Extensions for Microsoft.EntityFrameworkCore.Design</Description>
-    <PackageDescription>$(Description)</PackageDescription>
-    <PackageReleaseNotes>$(PackageDescription)</PackageReleaseNotes>
-    <RepositoryUrl>https://github.com/sped-mobi/entityframeworkcore-extensions-design.git</RepositoryUrl>
-    <PackageProjectUrl>https://github.com/sped-mobi/entityframeworkcore-extensions-design/tree/master</PackageProjectUrl>
-    <DevelopmentDependency>true</DevelopmentDependency>
+    <IsPackable>true</IsPackable>
+    <Description>
+      Custom implementation of Microsoft.EntityFrameworkCore.Design interfaces that provides alternative
+      code generation environment when developing EntityFrameworkCore projects in Visual Studio.
+    </Description>
   </PropertyGroup>
 
   <Sdk Name="Microsoft.NET.Sdk" />
 
-  <PropertyGroup>
-    <IsPackable>true</IsPackable>
+  <PropertyGroup> 
     <RootNamespace>Microsoft.EntityFrameworkCore</RootNamespace>
     <TargetFramework>netcoreapp2.2</TargetFramework>
   </PropertyGroup>
@@ -22,15 +20,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="contentFiles\**\*" Pack="true" PackagePath="content" />
+    <Content Include="contentFiles\**\*" Pack="true" PackagePath="contentFiles\any\" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="2.2.2" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="2.2.2" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.2.2" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.2" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.2.2">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="2.2.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="2.2.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.2.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.2.3">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>

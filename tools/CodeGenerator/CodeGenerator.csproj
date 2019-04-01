@@ -1,7 +1,10 @@
 ﻿<Project>
-  <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
 
+  <PropertyGroup>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
 
+  <Sdk Name="Microsoft.NET.Sdk" />
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -15,9 +18,4 @@
   </ItemGroup>
 
 
-
-
-
-
-  <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
 </Project>

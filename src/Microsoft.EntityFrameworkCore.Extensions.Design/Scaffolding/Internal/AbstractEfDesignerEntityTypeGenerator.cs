@@ -36,6 +36,8 @@ namespace Microsoft.EntityFrameworkCore.Scaffolding.Internal
                 GenerateClass(entityType);
                 WriteLine();
                 GenerateInterface(entityType);
+                WriteLine();
+                GenerateViewModel(entityType);
             }
 
             return Provider.Builder.ToString();
@@ -44,5 +46,7 @@ namespace Microsoft.EntityFrameworkCore.Scaffolding.Internal
         protected abstract void GenerateClass(IEntityType entityType);
 
         protected abstract void GenerateInterface(IEntityType entityType);
+
+        protected abstract void GenerateViewModel(IEntityType entityType);
     }
 }

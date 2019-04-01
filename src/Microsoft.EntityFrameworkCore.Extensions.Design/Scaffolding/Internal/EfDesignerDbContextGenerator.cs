@@ -49,6 +49,8 @@ namespace Microsoft.EntityFrameworkCore.Scaffolding.Internal
                 WriteLine("if (!optionsBuilder.IsConfigured)");
                 using (OpenBlock())
                 {
+                    connectionString = connectionString.Replace(@"\", @"\\");
+
                     WriteLine($"optionsBuilder.UseSqlServer(\"{connectionString}\");");
                 }
             }
