@@ -3,20 +3,15 @@ image: Visual Studio 2017
 configuration: Release
 platform: Any CPU
 
-
-
 before_build:
 - nuget restore
 
-build:
-  verbosity: detailed
-  script:
-    - cmd Build.cmd
-
+build_script:
+- cmd: build.cmd
 
 deploy:
   provider: NuGet
   server: https://www.myget.org/F/ollon-us-feed/api/v2/package
   api_key: d3cb76e3-890c-4874-a882-267e518aee3d
   skip_symbols: true
-  artifact: /.*\.nupkg/
+  artifact: artifacts/packages/**/*.nupkg
