@@ -1,4 +1,4 @@
-version: 1.0.{build}
+version: 1.0.{build}-{branch}
 image: Visual Studio 2017
 configuration: Release
 platform: Any CPU
@@ -9,9 +9,5 @@ before_build:
 build_script:
 - cmd: Release.cmd
 
-deploy:
-  provider: NuGet
-  server: https://www.myget.org/F/ollon-us-feed/api/v2/package
-  api_key: d3cb76e3-890c-4874-a882-267e518aee3d
-  skip_symbols: true
-  artifact: artifacts/packages/**/*.nupkg
+deploy_script:
+- cmd: Deploy.cmd
