@@ -4,7 +4,7 @@ configuration: Release
 platform: Any CPU
 
 artifacts:
-- path: $(APPVEYOR_BUILD_FOLDER)/artifacts/bin/**/*.dll
+- path: artifacts/bin/**/*.dll
   name: Binary File
 
 before_build:
