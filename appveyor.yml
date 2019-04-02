@@ -3,8 +3,11 @@ image: Visual Studio 2017
 configuration: Release
 platform: Any CPU
 
+environment:
+  package_id: Microsoft.EntityFrameworkCore.Extensions.Design
+
 artifacts:
-- path: artifacts/bin/**/*.dll
+- path: artifacts/bin/$(package_id)/**/*.dll
   name: Binary File
 
 before_build:

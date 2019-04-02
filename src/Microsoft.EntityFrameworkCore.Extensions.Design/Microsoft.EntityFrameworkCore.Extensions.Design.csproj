@@ -6,6 +6,8 @@
       Custom implementation of Microsoft.EntityFrameworkCore.Design interfaces that provides alternative
       code generation environment when developing EntityFrameworkCore projects in Visual Studio.
     </Description>
+    <PackageDescription>$(Description)</PackageDescription>
+    <PackageReleaseNotes>$(PackageDescription)</PackageReleaseNotes>
   </PropertyGroup>
 
   <Sdk Name="Microsoft.NET.Sdk" />
@@ -20,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="contentFiles\**\*" Pack="true" PackagePath="contentFiles\any\" />
+    <Content Include="contentFiles\**\*" Pack="true" PackagePath="content" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup>
-    <!--<DotNetBuildFromSource>false</DotNetBuildFromSource>-->
+    <DotNetBuildFromSource>false</DotNetBuildFromSource>
     <DotNetFinalVersionKind>release</DotNetFinalVersionKind>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
@@ -23,9 +23,6 @@
     <Company>$(Authors)</Company>
     <Product>$(AssemblyName)</Product>
     <Copyright>%A9 $([System.DateTime]::Now.Year) $(Company). All Rights Reserved.</Copyright>
-
-    <PackageDescription>$(Description)</PackageDescription>
-    <PackageReleaseNotes>$(PackageDescription)</PackageReleaseNotes>
       
     <RepositoryUrl>$(GitHubRepositoryUrl)</RepositoryUrl>
     <PackageIconUrl>https://go.microsoft.com/fwlink/?LinkID=288859</PackageIconUrl>
