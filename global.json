@@ -3,6 +3,6 @@
     "dotnet": "2.2.105"
   },
   "msbuild-sdks": {
-    "Microsoft.DotNet.Arcade.Sdk": "1.0.0-beta.19155.29"
+    "Microsoft.DotNet.Arcade.Sdk": "1.0.0-beta.19179.2"
   }
 }
