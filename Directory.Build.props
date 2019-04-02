@@ -26,8 +26,8 @@
       
     <RepositoryUrl>$(GitHubRepositoryUrl)</RepositoryUrl>
     <PackageIconUrl>https://go.microsoft.com/fwlink/?LinkID=288859</PackageIconUrl>
-    <PackageLicenseExpression>apache</PackageLicenseExpression>
-    <PackageLicenseUrl>https://apache.org/licenses/#2.0</PackageLicenseUrl>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <!--<PackageLicenseUrl>https://apache.org/licenses/#2.0</PackageLicenseUrl>-->
     <PackageProjectUrl>$(GitHubPackageProjectUrl)</PackageProjectUrl>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
 
