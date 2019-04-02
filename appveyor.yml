@@ -1,13 +1,14 @@
-version: 1.0.{build}-{branch}
+version: 1.0.{build}
 image: Visual Studio 2017
 configuration: Release
 platform: Any CPU
 
 environment:
+  dotnetcore_version: netcoreapp2.2
   package_id: Microsoft.EntityFrameworkCore.Extensions.Design
 
 artifacts:
-- path: artifacts/bin/$(package_id)/**/*.dll
+- path: artifacts/bin/$(package_id)/$(configuration)/$(dotnetcore_version)/*.dll
   name: Binary File
 
 before_build:
