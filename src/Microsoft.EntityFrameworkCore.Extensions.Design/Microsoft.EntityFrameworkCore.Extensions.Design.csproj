@@ -8,6 +8,7 @@
     </Description>
     <PackageDescription>$(Description)</PackageDescription>
     <PackageReleaseNotes>$(PackageDescription)</PackageReleaseNotes>
+    <DevelopmentDependency>true</DevelopmentDependency>
   </PropertyGroup>
 
   <Sdk Name="Microsoft.NET.Sdk" />
@@ -17,12 +18,9 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
   </PropertyGroup>
 
-  <ItemGroup>
-    <None Remove="contentFiles\**\*" />
-  </ItemGroup>
 
   <ItemGroup>
-    <Content Include="contentFiles\**\*" Pack="true" PackagePath="content" />
+    <Content Include="contentFiles\**\*" Pack="true" PackagePath="contentFiles\any\any\" CopyToOutputDirectory="true" />
   </ItemGroup>
 
   <ItemGroup>
