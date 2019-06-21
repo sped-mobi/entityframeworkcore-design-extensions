@@ -4,7 +4,7 @@ configuration: Release
 platform: Any CPU
 
 environment:
-  dotnetcore_version: netcoreapp2.2
+  dotnetcore_version: netstandard2.0
   package_id: Microsoft.EntityFrameworkCore.Extensions.Design
 
 artifacts:
