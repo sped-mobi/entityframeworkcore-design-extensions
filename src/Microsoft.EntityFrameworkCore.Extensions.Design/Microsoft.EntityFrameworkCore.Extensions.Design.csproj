@@ -16,9 +16,12 @@
 
   <PropertyGroup> 
     <RootNamespace>Microsoft.EntityFrameworkCore</RootNamespace>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Include="build\**\*" Pack="True" PackagePath="build\" />
+  </ItemGroup>
 
   <ItemGroup>
     <Content Include="contentFiles\**\*" Pack="true" PackagePath="contentFiles\" CopyToOutputDirectory="true" />

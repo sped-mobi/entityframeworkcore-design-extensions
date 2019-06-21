@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v2.2",
+    "signature": "da39a3ee5e6b4b0d3255bfef95601890afd80709"
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v2.2": {
+      "dotnet-watch/2.2.0-rtm-35687": {
+        "runtime": {
+          "dotnet-watch.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "dotnet-watch/2.2.0-rtm-35687": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

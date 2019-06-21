@@ -15,6 +15,6 @@ if (Test-Path $Context)
 }
 
 
-Scaffold-DbContext -Connection "Server=BACKTRACK;Database=OpenLMSDB;Trusted_Connection=True;MultipleActiveResultSets=true" -Provider Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -ContextDir Context -Context OpenLMSDbContext -Force -Verbose
+Scaffold-DbContext -Connection "Server=.;Database=OpenLMSDB;Trusted_Connection=True;MultipleActiveResultSets=true" -Provider Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -ContextDir Context -Context OpenLMSDbContext -Force -Verbose
 
 
