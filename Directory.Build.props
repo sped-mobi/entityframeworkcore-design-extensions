@@ -1,8 +1,13 @@
 <Project>
   <PropertyGroup>
-    <DotNetBuildFromSource>false</DotNetBuildFromSource>
+    <DotNetBuildFromSource>true</DotNetBuildFromSource>
     <DotNetFinalVersionKind>release</DotNetFinalVersionKind>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <DisableArcadeTestFramework>true</DisableArcadeTestFramework>
+    <UsingToolXliff Condition="'$(UsingToolXliff)'==''">false</UsingToolXliff>
+    <UsingToolVsSDK Condition="'$(UsingToolVsSDK)'==''">false</UsingToolVsSDK>
+    <UsingToolNetFrameworkReferenceAssemblies Condition="'$(MSBuildRuntimeType)'=='Core'">true</UsingToolNetFrameworkReferenceAssemblies>
+    <IsWpfTempProject>false</IsWpfTempProject>
+    <IsWpfTempProject Condition="$(MSBuildProjectName.EndsWith('_wpftmp'))">true</IsWpfTempProject>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -27,15 +32,18 @@
     <RepositoryUrl>$(GitHubRepositoryUrl)</RepositoryUrl>
     <PackageIconUrl>https://go.microsoft.com/fwlink/?LinkID=288859</PackageIconUrl>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
-    <!--<PackageLicenseUrl>https://apache.org/licenses/#2.0</PackageLicenseUrl>-->
     <PackageProjectUrl>$(GitHubPackageProjectUrl)</PackageProjectUrl>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
 
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     
-    <!--<DebugType>full</DebugType>-->
+    <DebugType>full</DebugType>
     <DebugSymbols>true</DebugSymbols>
     <LangVersion>latest</LangVersion>
 
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
+
+
+  <Import Project="eng\VisualStudio.props" Condition="'$(UsingToolVsSDK)'=='true'" />
 </Project>

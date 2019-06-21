@@ -1,10 +1,10 @@
 <Project>
-  <Import Project="Sdk.targets" Sdk="Microsoft.DotNet.Arcade.Sdk" />
   <PropertyGroup>
-    <NoWarn>$(NoWarn);NU5125;NU5105;NU5104;NU5111;NU5110</NoWarn>
+    <NoWarn>$(NoWarn);NU5125;NU5105;NU5104;NU5111;NU5110;CS8002</NoWarn>
   </PropertyGroup>
+  <Import Project="Sdk.targets" Sdk="Microsoft.DotNet.Arcade.Sdk" />
 
-  <ItemGroup>
-    <PackageReference Remove="XliffTasks" />
-  </ItemGroup>
+
+  <Import Project="eng\VisualStudio.targets" Condition="'$(UsingToolVsSDK)'=='true'" />
+
 </Project>

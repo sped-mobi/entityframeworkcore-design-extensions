@@ -1,16 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore.Design;
-using Microsoft.EntityFrameworkCore.Design.Internal;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Microsoft.EntityFrameworkCore.Design.Internal
+﻿namespace Microsoft.EntityFrameworkCore.Design.Internal
 {
     public class EfDesignerOperationReporter : IOperationReporter
     {
-        private IOperationReportHandler _handler;
+        private readonly IOperationReportHandler _handler;
 
         public EfDesignerOperationReporter(IOperationReportHandler handler)
         {

@@ -4,13 +4,11 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System.IO;
-using Microsoft.EntityFrameworkCore.Controllers.Design;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Microsoft.EntityFrameworkCore.Scaffolding;
 using Microsoft.EntityFrameworkCore.Scaffolding.Internal;
+using System.IO;
 
 namespace Microsoft.EntityFrameworkCore.Scaffolding
 {
@@ -19,15 +17,14 @@ namespace Microsoft.EntityFrameworkCore.Scaffolding
         public EfDesignerModelCodeGenerator(
             CodeGeneratorDependencies dependencies,
             ICSharpEntityTypeGenerator entityTypeGenerator,
-            ICSharpDbContextGenerator dbContextGenerator,
-            IEfDesignerControllerGenerator controllerGenerator) : base(dependencies)
+            ICSharpDbContextGenerator dbContextGenerator) : base(dependencies)
         {
             EntityTypeGenerator = entityTypeGenerator;
             DbContextGenerator = dbContextGenerator;
-            ControllerGenerator = controllerGenerator;
+            //ControllerGenerator = controllerGenerator;
         }
 
-        public IEfDesignerControllerGenerator ControllerGenerator { get; }
+        //public IEfDesignerControllerGenerator ControllerGenerator { get; }
 
         public ICSharpEntityTypeGenerator EntityTypeGenerator { get; }
 
@@ -48,7 +45,7 @@ namespace Microsoft.EntityFrameworkCore.Scaffolding
             string connectionString,
             ModelCodeGenerationOptions options)
         {
-            var scaffoldedModel = new ScaffoldedModel();
+            ScaffoldedModel scaffoldedModel = new ScaffoldedModel();
             string dbContextCode = DbContextGenerator.WriteCode(model, @namespace, contextName, connectionString, options.UseDataAnnotations, options.SuppressConnectionStringWarning);
             string path2 = contextName + ".cs";
             scaffoldedModel.ContextFile = new ScaffoldedFile()
@@ -62,17 +59,17 @@ namespace Microsoft.EntityFrameworkCore.Scaffolding
                 string fileName = entityType.DisplayName() + ".cs";
                 scaffoldedModel.AdditionalFiles.Add(CreateFile(contextCode, fileName));
             }
-            foreach (IEntityType entityType in model.GetEntityTypes())
-            {
-                string controllerCode = ControllerGenerator.WriteCode(entityType, @namespace, contextName);
-                string fileName = entityType.DisplayName() + "Controller.cs";
-                string path = Path.Combine("Controllers", fileName);
+            //foreach (IEntityType entityType in model.GetEntityTypes())
+            //{
+            //    string controllerCode = ControllerGenerator.WriteCode(entityType, @namespace, contextName);
+            //    string fileName = entityType.DisplayName() + "Controller.cs";
+            //    string path = Path.Combine("Controllers", fileName);
 
-                if (!Directory.Exists("Controllers"))
-                    Directory.CreateDirectory("Controllers");
+            //    if (!Directory.Exists("Controllers"))
+            //        Directory.CreateDirectory("Controllers");
 
-                scaffoldedModel.AdditionalFiles.Add(CreateFile(controllerCode, path));
-            }
+            //    scaffoldedModel.AdditionalFiles.Add(CreateFile(controllerCode, path));
+            //}
 
             return scaffoldedModel;
         }

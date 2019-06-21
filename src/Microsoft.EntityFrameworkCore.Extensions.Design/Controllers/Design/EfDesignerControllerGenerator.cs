@@ -4,10 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using Microsoft.EntityFrameworkCore.Design;
-using Microsoft.EntityFrameworkCore.Metadata;
-using System.Linq;
 
 namespace Microsoft.EntityFrameworkCore.Controllers.Design
 {
@@ -119,8 +116,10 @@ namespace Microsoft.EntityFrameworkCore.Controllers.Design
                         WriteLine("return NotFound();");
                     }
                     WriteLine("var errors = JsonConvert.SerializeObject(ModelState.Values");
+                    PushIndent();
                     WriteLine(".SelectMany(state => state.Errors)");
                     WriteLine(".Select(error => error.ErrorMessage));");
+                    PopIndent();
                     WriteLine("Debug.WriteLine(errors);");
                     WriteLine($"if (await _supervisor.Update{entityName}Async(input, ct))");
                     using (OpenBlock())

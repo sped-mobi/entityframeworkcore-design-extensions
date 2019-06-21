@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <IsPackable>true</IsPackable>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Description>
       Custom implementation of Microsoft.EntityFrameworkCore.Design interfaces that provides alternative
       code generation environment when developing EntityFrameworkCore projects in Visual Studio.
@@ -20,7 +21,7 @@
 
 
   <ItemGroup>
-    <Content Include="contentFiles\**\*" Pack="true" PackagePath="contentFiles\any\any\" CopyToOutputDirectory="true" />
+    <Content Include="contentFiles\**\*" Pack="true" PackagePath="contentFiles\" CopyToOutputDirectory="true" />
   </ItemGroup>
 
   <ItemGroup>
