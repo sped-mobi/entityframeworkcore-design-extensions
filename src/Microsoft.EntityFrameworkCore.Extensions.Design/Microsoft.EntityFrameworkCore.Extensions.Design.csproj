@@ -16,7 +16,7 @@
 
   <PropertyGroup> 
     <RootNamespace>Microsoft.EntityFrameworkCore</RootNamespace>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>

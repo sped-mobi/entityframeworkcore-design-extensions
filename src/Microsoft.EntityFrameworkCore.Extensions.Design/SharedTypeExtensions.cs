@@ -197,21 +197,7 @@ namespace System
             return MakeNullable(underlyingType, true);
         }
 
-        public static Type GetSequenceType(this Type type)
-        {
-            Type sequenceType = TryGetSequenceType(type);
-            if (!(sequenceType == null))
-                return sequenceType;
-            throw new ArgumentException();
-        }
 
-        public static Type TryGetSequenceType(this Type type)
-        {
-            Type elementType = TryGetElementType(type, typeof(IEnumerable<>));
-            if ((object)elementType != null)
-                return elementType;
-            return TryGetElementType(type, typeof(IAsyncEnumerable<>));
-        }
 
         public static Type TryGetElementType(this Type type, Type interfaceOrBaseType)
         {
